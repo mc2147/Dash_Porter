@@ -116,7 +116,7 @@ def Ref_Dict(user):
 		output["Requests"] = driver.requests.all()
 	return output
 
-##FIX ME
+##FIX ME - BEGINNING OF EMERGENCY SERVICE FLOW -> NEEDS TO CONNECT TO REPORT_A_CAR HTML PAGE
 @user_passes_test(Driver_Check)
 def Home(request):	
 	tow_truck = Service.objects.get(id_num = 1)
@@ -434,7 +434,7 @@ def Home(request):
 		return HttpResponseRedirect('/service-details')
 	return render(request, "E_Home_Frame.html", context)
 
-##FIX ME
+##FIX ME - RETURN TO THE FRONTPAGE HTML PAGE
 def ReturnHome(request):
 	user = request.user
 	ref_dict = Ref_Dict(user)
@@ -1014,6 +1014,7 @@ def E_Home(request):
 		return HttpResponseRedirect('/emergency-service-details')
 	return render(request, "Roadside_Home.html", context)
 
+##DEPRECATED
 def E_ServiceTow(request):
 	service_key = request.session["Service_Key"]
 	request_pk = request.session["Request_PK"]
@@ -1047,6 +1048,7 @@ def E_ServiceTow(request):
 		return HttpResponseRedirect("/emergency-service-details")
 	return render(request, "Roadside_Tow_Service.html", context)
 
+##DEPRECATED
 def E_ServiceFlat(request):
 	context = {}
 	service_key = request.session["Service_Key"]
@@ -1095,6 +1097,7 @@ def E_ServiceFlat(request):
 		return HttpResponseRedirect("/emergency-service-details")
 	return render(request, "Roadside_Flat_Tire.html", context)
 
+##DEPRECATED
 def E_ServiceDetails(request):
 	# if ("From_Flat" in request.session) and (request.session[From_Flat] == True):
 	# 	
@@ -1112,6 +1115,7 @@ def E_ServiceDetails(request):
 		return HttpResponseRedirect("/emergency-service-payment")
 	return render(request, "Roadside_Details.html", context)
 
+##FIX ME - CAN BE USED FOR GET CAR BACK PAYMENT -> MAP TO GET_CAR_BACK
 def E_ServicePayment(request):
 	context = {}
 	service_key = request.session["Service_Key"]
@@ -1151,6 +1155,7 @@ def E_ServicePayment(request):
 		return HttpResponseRedirect("/emergency-service-receipt")
 	return render(request, "Roadside_Payment.html", context)
 
+#FIX ME -> MAP TO SOME KIND OF CONFIRMATION PAGE AFTER GET CAR BACK PAYMENT
 def E_ServiceReceipt(request):
 	context = {}
 	request_pk = request.session["Request_PK"]
@@ -1184,7 +1189,7 @@ def E_ServiceReceipt(request):
 	return render(request, "Roadside_Confirmation.html", context)
 
 #DISPATCH STARTS HERE
-#DISPATCH STARTS HERE
+#NEED TO ADD: COMPANY DASHBOARD BACKEND
 def Dispatch_Check(user):
 	if (user.is_active):
 		return Dispatch.objects.filter(user=user).exists()
@@ -1200,6 +1205,7 @@ def Dispatch_Ref_Dict(user):
 		output["Company"] = dispatcher.company
 	return output
 
+#DISPATCH HOME PAGE - NEED TO UPDATE TABLES TO SHOW ALL TOW REQUEST INFO AND PICTURES OF CARS
 @user_passes_test(Dispatch_Check, "/dispatch-login")
 def DispatchDisplay(request):
 	user = request.user
@@ -1265,6 +1271,7 @@ def DispatchDisplay(request):
 		#delete the request and assign to dispatch	
 	return render(request, "Dispatch_Portal_Requests.html", context)	
 
+##DISPATCH INDIVIDUALLY CLAIMED REQUESTS - SAME AS ABOVE
 @user_passes_test(Dispatch_Check, "/dispatch-login")
 def DispatchAccountRequests(request):
 	user = request.user
@@ -1347,6 +1354,7 @@ def DispatchAccountRequests(request):
 			return HttpResponseRedirect('/dispatch-claimed-requests/')
 	return render(request, "Dispatch_Account_Requests.html", context)	
 
+##DISPATCH CHANGE ACCOUNT INFORMATION
 @user_passes_test(Dispatch_Check, "/dispatch-login")
 def DispatchSetting(request):
 	user = request.user
@@ -1391,6 +1399,7 @@ def DispatchSetting(request):
 	#Change profile
 	return render(request, "Dispatch_Setting.html", context)
 
+##DISPATCH LOGIN
 def DispatchLogin(request):
 	#Dispatch Login
 	user = request.user
@@ -1427,6 +1436,7 @@ def DispatchLogin(request):
 		return HttpResponseRedirect('/dispatch-signup/')
 	return render(request, "Dispatch_Login.html", context)
 
+##DISPATCH CREATE ACCOUNT - NEED TO ADD OPTION TO ADD COMPANY
 def DispatchSignUp(request):
 	context = {}
 
